@@ -5,6 +5,7 @@ import androidx.annotation.Keep
 import com.zntkr.mybookapplication.core.database.model.BookEntity
 import com.zntkr.mybookapplication.core.network.model.BookItem
 import com.zntkr.mybookapplication.core.network.model.BooksResponse
+import kotlinx.parcelize.Parcelize
 
 @Keep
 data class Books(
@@ -12,6 +13,7 @@ data class Books(
 )
 
 @Keep
+@Parcelize
 data class Book(
     val uid: Int = 0,
     val rank: Int? = null,
@@ -22,7 +24,7 @@ data class Book(
     val bookImage: String? = null,
     val amazonProductUrl: String? = null,
     val isFavorite: Boolean = false
-)
+) : Parcelable
 
 fun BooksResponse.asBook() : Books {
     val result = arrayListOf<Book>()

@@ -73,7 +73,22 @@ class BookListViewModel  @Inject constructor(
                     }
                     bookRepository.clearDatabase()
                     bookRepository.addBooksToDatabase(books)
-                    _uiState.value = BookListUiState.Success(books)
+                    getBooks()
+                }
+        }
+    }
+
+    private fun getBooks() {
+        viewModelScope.launch {
+            bookRepository.getBooksFromDatabase()
+                .onStart {
+                    _uiState.value = BookListUiState.Loading
+                }
+                .catch {
+                    _uiState.value = BookListUiState.Error
+                }
+                .collect {
+                    _uiState.value = BookListUiState.Success(it)
                 }
         }
     }

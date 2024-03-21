@@ -88,7 +88,9 @@ fun BookDetailScreen(
 
         BookDetailUiState.Error -> {
             Toast.makeText(context, "Error Occured", Toast.LENGTH_SHORT).show()
-            navController.popBackStack()
+            navController.navigate("main") {
+                popUpTo(0)
+            }
         }
     }
 }
